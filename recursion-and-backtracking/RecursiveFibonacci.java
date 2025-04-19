@@ -1,33 +1,33 @@
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class RecursiveFibonacci {
+    private static Map<Integer, Long> memo = new HashMap<>();
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         int n = scanner.nextInt();
 
-        int[] memo = new int[n + 1];
-        Arrays.fill(memo, -1);
-
-        int fibonacci = fibonacci(n, memo);
+        long fibonacci = fibonacci(n);
 
         System.out.println(fibonacci);
     }
 
-    private static int fibonacci(int n, int[] memo) {
+    private static long fibonacci(int n) {
         if (n <= 1) {
             return 1;
         }
 
-        if (memo[n] != -1) {
-            return memo[n];
+        if (memo.containsKey(n)) {
+            return memo.get(n);
         }
 
-        // Recursive case: calculate Fibonacci number
-        // and store it in memo
-        memo[n] = fibonacci(n - 1, memo) + fibonacci(n - 2, memo);
+        long result = fibonacci(n - 1) + fibonacci(n - 2);
 
-        return memo[n];
+        memo.put(n, result);
+
+        return result;
     }
 }
